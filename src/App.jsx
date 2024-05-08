@@ -7,11 +7,11 @@ const App = () => {
   const imageUrl ="https://autoapi.dezinfeksiyatashkent.uz/api/uploads/images/"
   const getCategory = ( ) =>{
        axios({
-        url:"https://autoapi.dezinfeksiyatashkent.uz/api/categories" ,
+        url:"https://autoapi.dezinfeksiyatashkent.uz/api/cities" ,
         method:"GET" ,
        }) .then((res) =>{
          setCategory(res?.data?.data)
-         console.log(res?.data?.data?.image_src);
+         console.log(res?.data?.data);
        }).catch((err) =>{
         console.log(err);
        })
@@ -20,20 +20,22 @@ const App = () => {
        getCategory()
   },[])
   return (
+    <div className='app-city'>
 <div className='container'> 
 {
       category && category.map((item, index) =>(
-        <div key={index}>
-          { item?.name_en}
+        <div key={index} className='card'>
+          <img  className='card-image' src={`${imageUrl}${item?.image_src}`} alt="images" />
+   <p>       { item?.name} </p>
           <p>
-          { item?.name_ru}
+          { item?.text}
           </p>
-          <img style={{width: "30%"}} src={`${imageUrl}${item?.image_src}`} alt="images" />
           </div>
       ))
     }
     <CreatePost/>
 </div>
+    </div>
 )
 }
 

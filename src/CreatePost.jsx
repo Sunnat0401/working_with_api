@@ -6,13 +6,13 @@ const CreatePost = () => {
 
     const createCategory = (e) =>{
         e.preventDefault();
-        const name_en = document.getElementById('name_en').value;
-        const name_ru = document.getElementById('name_ru').value;
+        const name = document.getElementById('name').value;
+        const text = document.getElementById('text').value;
         const images =  document.getElementById('images').files[0];
         
         const formData = new FormData();
-        formData.append('name_en', name_en);
-        formData.append('name_ru', name_ru);
+        formData.append('name', name);
+        formData.append('text', text);
         formData.append('images', images);
 
         const headers = {
@@ -20,7 +20,7 @@ const CreatePost = () => {
         };
 
         axios({
-            url: "https://autoapi.dezinfeksiyatashkent.uz/api/categories",
+            url: "https://autoapi.dezinfeksiyatashkent.uz/api/cities",
             method: "POST",
             data: formData,
             headers: headers
@@ -36,8 +36,8 @@ const CreatePost = () => {
     return (
         <div>
             <form onSubmit={createCategory}> 
-                <input type="text"  id="name_en"/>
-                <input type="text" id="name_ru" />
+                <input type="text"  id="name"/>
+                <input type="text" id="text" />
                 <input type="file" id="images" />
                 <button type="submit">Yuborish</button>
             </form>
