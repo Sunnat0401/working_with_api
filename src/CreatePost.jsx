@@ -3,8 +3,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import './App.css'
 import { Button } from 'antd/es/radio';
-import DeleteConfirmation from './DeleteModal';
-
+import './CreatePost.css'
 export default function CreatePost() {
     // const [openModalDelte, setOpenModalDelte] = useState(false)
     const [open, setOpen ] = useState(false);
@@ -137,13 +136,14 @@ export default function CreatePost() {
             });
     }
     return (
-        <div>
-            <form onSubmit={createCategory}>
-                <input type="text" id="name_en" placeholder="Name (English)" />
-                <input type="text" id="name_ru" placeholder="Name (Russian)" />
-                <input type="file" id="images" />
-                <button type="submit">Yuborish</button>
-            </form>
+        <div >
+<form onSubmit={createCategory} className='createForm'>
+    <input className='createInput' type="text" id="name_en" placeholder="Name (English)" />
+    <input className='createInput' type="text" id="name_ru" placeholder="Name (Russian)" />
+    <label for="images" class="fileInputLabel">Choose File</label>
+    <input type="file" id="images" />
+    <button type="submit" className='createbtn'>Submit</button>
+</form>
             <div className='wrapper'>
             {
                 category && category.map((item, index) => (

@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import './App.css'
 import axios from 'axios'
 import  CreatePost from './CreatePost'
+import './index.css'
 const App = () => {
   const [category, setCategory] = useState([])
   const imageUrl ="https://autoapi.dezinfeksiyatashkent.uz/api/uploads/images/"
@@ -20,7 +21,7 @@ const App = () => {
        getCategory()
   },[])
   return (
-    <div className='app-city'>
+    <div className='app-city home'>
 <div className='container'> 
 {/* {
       category && category.map((item, index) =>(
