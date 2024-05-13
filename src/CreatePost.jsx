@@ -130,6 +130,7 @@ export default function CreatePost() {
         .then((res) => {
             message.success("O'zgartirildi")
             getData();
+            setOpen(false)
         })
         .catch((err) => {
             message.error("Xatolik")
