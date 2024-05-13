@@ -13,8 +13,8 @@ export default function CreatePost() {
     const [nameRU, setNameRu] = useState('')
     const [image, setImage] = useState(null)
     const [id, setId] = useState(null)
-    const [imageUrl, setImageUrl] = useState('');
-    const urlimage = 'https://autoapi.dezinfeksiyatashkent.uz/api/uploads/images/'
+    // const [imageUrl, setImageUrl] = useState('');
+   const urlimage = 'https://autoapi.dezinfeksiyatashkent.uz/api/uploads/images/'
 
     const [modal, contextHolder] = Modal.useModal();
      const getData = () => {
@@ -179,11 +179,11 @@ export default function CreatePost() {
                     <input className='modal-inputs' type="text" value={nameRU} onChange={(e) => setNameRu(e.target.value)} />
                     <br />
                     {image && (
-                        <img className='modal-img' src={`${  urlimage}${image} `} alt="Category Image" />
+                        <img className='modal-img' src={`${urlimage}${image} `} alt="Category Image" />
                     )}
-                    <label htmlFor="images1" className="fileInputLabel">Choose File</label>
+                    <label htmlFor="images1" className="modalInput">Choose File</label>
                     <input type="file" id='images1' onChange={(e) => setImage(e.target.files[0])} />
-                    <button type='submit'>Send</button>
+                    <button type='submit' className='modal-btn'>Send</button>
                 </form>
             </Modal>
 
