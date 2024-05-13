@@ -13,6 +13,7 @@ export default function CreatePost() {
     const [nameRU, setNameRu] = useState('')
     const [image, setImage] = useState(null)
     const [id, setId] = useState(null)
+    const [imageUrl, setImageUrl] = useState('');
     const urlimage = 'https://autoapi.dezinfeksiyatashkent.uz/api/uploads/images/'
 
     const [modal, contextHolder] = Modal.useModal();
@@ -96,7 +97,7 @@ export default function CreatePost() {
 }
     const showModal = (item) => {
         setId(item.id)
-        console.log(item);
+        console.log(image);
         setNameEn(item?.name_en)
         setNameRu(item?.name_ru)
         setImage(`${item?.image_src}`)
@@ -107,41 +108,44 @@ export default function CreatePost() {
         setOpen(false)
     }
 
-    const editCategory = (event) =>{
+    const editCategory = (event) => {
         event.preventDefault();
-        const images1 = document.getElementById('images1').files[0]
+        // const  images1 = document.getElementById('images1').files[0]
         const formData = new FormData();
-
         formData.append('name_en', nameEn);
         formData.append('name_ru', nameRU);
-        formData.append('images', images1);
-
+        // Check if a new image is selected
+        if (image) {
+            formData.append('images', image);
+        }
+    
         const headers = {
             Authorization: `Bearer ${token}`,
         };
-
+    
         axios({
             url: `https://autoapi.dezinfeksiyatashkent.uz/api/categories/${id}`,
             method: 'PUT',
             data: formData,
             headers: headers,
         })
-            .then((res) => {
-                message.success("O'zgartirildi")
-                getData()
-            })
-            .catch((err) => {
-                message.error("Xatolik")
-                console.log(err);
-            });
+        .then((res) => {
+            message.success("O'zgartirildi")
+            getData();
+        })
+        .catch((err) => {
+            message.error("Xatolik")
+            console.log(err);
+        });
     }
     return (
         <div >
+    <h1 className='title'>Istalgancha malumot qo'shishingiz Mumkun !</h1>
 <form onSubmit={createCategory} className='createForm'>
     <input className='createInput' type="text" id="name_en" placeholder="Name (English)" />
     <input className='createInput' type="text" id="name_ru" placeholder="Name (Russian)" />
-    <label for="images" class="fileInputLabel">Choose File</label>
-    <input type="file" id="images" />
+    <label for="images" className="fileInputLabel">Choose File</label>
+<input type="file" id="images" />
     <button type="submit" className='createbtn'>Submit</button>
 </form>
             <div className='wrapper'>
@@ -149,7 +153,7 @@ export default function CreatePost() {
                 category && category.map((item, index) => (
                     <div className='card' key={index}>
                         <img className='card-img' src={`${urlimage}/${item.image_src}`} alt="Error" />
-                        <h2 card-title>{item.name_en}</h2>
+                        <h2 className='card-title' >{item.name_en}</h2>
                         <button className='btn btn-primary '  onClick={() => deleteCategory(item.id)}>Delete</button>
                         <button className='btn btn-secondary' onClick={()=> showModal(item)}>Edit</button>
                     </div>
@@ -169,20 +173,19 @@ export default function CreatePost() {
         {/* 🚨 BUG when put here */}
         {contextHolder} 
             </Modal>
-            <Modal title="Tahrirlash" open={open} footer={null} onCancel={closeModal}>
-    <form onSubmit={editCategory}>
-        <input type="text" value={nameEn} onChange={(e) => setNameEn(e.target.value)} />
-        <input type="text" value={nameRU} onChange={(e) => setNameRu(e.target.value)} />
-        <br />
-        {/* Input field to display the original image */}
-        {image && (
-            <img src={`${urlimage}${image}`} alt="Category Image" style={{ maxWidth: '100px', height: 'auto' }} />
-        )}
-        {/* Input field to upload a new image */}
-        <input type="file" id='images1' onChange={(e) => setImage(e.target.files[0])} />
-        <button type='submit'>Send</button>
-    </form>
-</Modal>
+            <Modal title="Edit Category" open={open} footer={null} onCancel={closeModal}>
+                <form onSubmit={editCategory}>
+                    <input className='modal-inputs' type="text" value={nameEn} onChange={(e) => setNameEn(e.target.value)} />
+                    <input className='modal-inputs' type="text" value={nameRU} onChange={(e) => setNameRu(e.target.value)} />
+                    <br />
+                    {image && (
+                        <img className='modal-img' src={`${  urlimage}${image} `} alt="Category Image" />
+                    )}
+                    <label htmlFor="images1" className="fileInputLabel">Choose File</label>
+                    <input type="file" id='images1' onChange={(e) => setImage(e.target.files[0])} />
+                    <button type='submit'>Send</button>
+                </form>
+            </Modal>
 
 
         </div>
