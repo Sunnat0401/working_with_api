@@ -118,11 +118,9 @@ export default function CreatePost() {
         if (image) {
             formData.append('images', image);
         }
-    
         const headers = {
             Authorization: `Bearer ${token}`,
         };
-    
         axios({
             url: `https://autoapi.dezinfeksiyatashkent.uz/api/categories/${id}`,
             method: 'PUT',
@@ -169,7 +167,6 @@ export default function CreatePost() {
         >
           Confirm
         </Button>
-
         {/* 🚨 BUG when put here */}
         {contextHolder} 
             </Modal>
@@ -186,8 +183,6 @@ export default function CreatePost() {
                     <button type='submit' className='modal-btn'>Send</button>
                 </form>
             </Modal>
-
-
         </div>
     );
 }
