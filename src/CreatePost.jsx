@@ -6,7 +6,7 @@ import { Button } from 'antd/es/radio';
 import DeleteConfirmation from './DeleteModal';
 
 export default function CreatePost() {
-    const [openModalDelte, setOpenModalDelte] = useState(false)
+    // const [openModalDelte, setOpenModalDelte] = useState(false)
     const [open, setOpen ] = useState(false);
     const [openodal, setOpenModal ] = useState(false);
     const [category, setCategory] = useState([])
@@ -95,18 +95,12 @@ export default function CreatePost() {
         },
     });
 }
-//    const deletedOpenModal =() =>{
-//     setOpenModalDelte(true)
-//    }
-//    const deletedCloseModal =() =>{
-//     setOpenModalDelte(false)
-//    }
     const showModal = (item) => {
         setId(item.id)
         console.log(item);
-        setNameEn(item.name_en)
-        setNameRu(item.name_ru)
-        setImage(image)
+        setNameEn(item?.name_en)
+        setNameRu(item?.name_ru)
+        setImage(`${item?.image_src}`)
         setOpen(true)    
     }
 
@@ -135,6 +129,7 @@ export default function CreatePost() {
         })
             .then((res) => {
                 message.success("O'zgartirildi")
+                getData()
             })
             .catch((err) => {
                 message.error("Xatolik")
@@ -175,22 +170,21 @@ export default function CreatePost() {
         {contextHolder} 
             </Modal>
             <Modal title="Tahrirlash" open={open} footer={null} onCancel={closeModal}>
-             <form onSubmit={editCategory}>
-               <input type="text" value={nameEn} onChange={(e) => setNameEn(e.target.value)}/>
-               <input type="text" value={nameRU} onChange={(e) => setNameRu(e.target.value)}/>
-               <input type="file" id='images1' value={image} onChange={(e) => setNameRu(e.target.files[0])}/>
-               <button type='submit'>Send</button>
-             </form>
-            </Modal>
+    <form onSubmit={editCategory}>
+        <input type="text" value={nameEn} onChange={(e) => setNameEn(e.target.value)} />
+        <input type="text" value={nameRU} onChange={(e) => setNameRu(e.target.value)} />
+        <br />
+        {/* Input field to display the original image */}
+        {image && (
+            <img src={`${urlimage}${image}`} alt="Category Image" style={{ maxWidth: '100px', height: 'auto' }} />
+        )}
+        {/* Input field to upload a new image */}
+        <input type="file" id='images1' onChange={(e) => setImage(e.target.files[0])} />
+        <button type='submit'>Send</button>
+    </form>
+</Modal>
+
+
         </div>
     );
 }
-//    <Modal
-//    title="O'chirish"
-//    open={openModalDelte}
-//    onOk={deletedCloseModal}
-//    confirmLoading={confirmLoading}
-//    onCancel={handleCancel}
-//  >
-//    <p>{modalText}</p>
-//  </Modal>
